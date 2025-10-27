@@ -1,3 +1,6 @@
 [submodule "services/gateway"]
 	path = services/gateway
 	url = https://github.com/FireFly4ik/pinek-gateway
+[submodule "services/auth"]
+	path = services/auth
+	url = https://github.com/FireFly4ik/pinek-auth
