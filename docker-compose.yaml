@@ -23,13 +23,37 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "${POSTGRES_PORT}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./migrations:/docker-entrypoint-initdb.d
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
       interval: 5s
       timeout: 5s
       retries: 5
+
+  cron:
+    build:
+      context: .
+      dockerfile: ./dockerfiles/cron/Dockerfile
+    container_name: cron
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      PGPASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./cron:/cron
+    entrypoint: [ "/bin/bash", "-c" ]
+    command: |
+      "
+      echo '59 23 28-31 * * [ \"$(date +\\%d -d tomorrow)\" == \"01\" ] && /cron/rotate_partitions.sh >> /var/log/cron.log 2>&1' >> /etc/crontab &&
+      touch /var/log/cron.log &&
+      cron -f
+      "
 
 volumes:
   consul-data:
