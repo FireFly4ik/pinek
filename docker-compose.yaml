@@ -55,6 +55,15 @@ services:
       cron -f
       "
 
+  migrator:
+    image: migrate/migrate
+    command: ["-path", "/migrations", "-database", "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?sslmode=disable", "up"]
+    volumes:
+      - ./migrations:/migrations
+    depends_on:
+      postgres:
+        condition: service_healthy
+
 volumes:
   consul-data:
   postgres_data:
