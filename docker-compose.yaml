@@ -64,6 +64,25 @@ services:
       postgres:
         condition: service_healthy
 
+  minio:
+    container_name: minio
+    image: 'bitnami/minio:latest'
+    volumes:
+      - 'minio_data:/data'
+    ports:
+      - "${MINIO_PORT}:9000"
+    restart: unless-stopped
+    environment:
+      MINIO_ROOT_USER: "${MINIO_ROOT_USER}"
+      MINIO_ROOT_PASSWORD: "${MINIO_ROOT_PASSWORD}"
+      MINIO_USE_SSL: "${MINIO_USE_SSL}"
+      MINIO_DEFAULT_BUCKETS: "${MINIO_BUCKET_NAME}"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:${MINIO_PORT}/minio/health/live" ]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
 volumes:
   consul-data:
   postgres_data:
