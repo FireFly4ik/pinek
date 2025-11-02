@@ -98,6 +98,14 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
 
+  grafana:
+    container_name: grafana-service
+    image: grafana/grafana
+    ports:
+      - "${GRAFANA_PORT}:3000"
+    depends_on:
+      - prometheus
+
 volumes:
   consul-data:
   postgres_data:
