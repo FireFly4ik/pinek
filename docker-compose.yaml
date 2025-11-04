@@ -106,6 +106,17 @@ services:
     depends_on:
       - prometheus
 
+  gateway:
+    build:
+      context: ./services/gateway
+      dockerfile: Dockerfile
+    container_name: gateway
+    restart: unless-stopped
+    ports:
+      - "${GATEWAY_PORT}:8080"
+    depends_on:
+      - consul
+
 volumes:
   consul-data:
   postgres_data:
