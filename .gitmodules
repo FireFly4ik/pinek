@@ -7,3 +7,6 @@
 [submodule "services/file"]
 	path = services/file
 	url = https://github.com/FireFly4ik/pinek-file
+[submodule "services/post"]
+	path = services/post
+	url = https://github.com/FireFly4ik/pinek-post.git
