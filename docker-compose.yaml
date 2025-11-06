@@ -49,7 +49,7 @@ services:
       - ./cron:/cron
     entrypoint: [ "/bin/bash", "-c" ]
     command: |
-      echo '59 23 28-31 * * [ \"$(date +\\%d -d tomorrow)\" == \"01\" ] && /cron/rotate_partitions.sh >> /var/log/cron.log 2>&1' >> /etc/crontab &&
+      echo '59 23 28-31 * * [ "$$(date +%%d -d tomorrow)" == "01" ] && /cron/rotate_partitions.sh >> /var/log/cron.log 2>&1' >> /etc/crontab &&
       touch /var/log/cron.log &&
       cron -f
 
