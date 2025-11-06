@@ -17,6 +17,7 @@ CREATE TABLE boards (
     name TEXT NOT NULL,
     description TEXT,
     created_at TIMESTAMPTZ DEFAULT now()
+    deleted_at TIMESTAMPTZ DEFAULT NULL
 );
 
 CREATE TABLE board_posts (
