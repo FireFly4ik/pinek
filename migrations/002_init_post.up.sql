@@ -16,7 +16,7 @@ CREATE TABLE boards (
     user_id UUID NOT NULL,
     name TEXT NOT NULL,
     description TEXT,
-    created_at TIMESTAMPTZ DEFAULT now()
+    created_at TIMESTAMPTZ DEFAULT now(),
     deleted_at TIMESTAMPTZ DEFAULT NULL
 );
 

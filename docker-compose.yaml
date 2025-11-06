@@ -55,6 +55,7 @@ services:
 
   migrator:
     image: migrate/migrate
+    container_name: migrator
     command: ["-path", "/migrations", "-database", "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?sslmode=disable", "up"]
     volumes:
       - ./migrations:/migrations
