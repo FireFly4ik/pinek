@@ -9,7 +9,7 @@ rule_files:
 scrape_configs:
   - job_name: "consul_services"
     consul_sd_configs:
-      - server: "http://178.140.128.113:8500"
+      - server: "http://82.202.138.76:8500"
         services: []  # пусто = брать все сервисы
         tag_separator: ","
 
