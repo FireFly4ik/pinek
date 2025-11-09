@@ -117,6 +117,45 @@ services:
       - consul
       - prometheus
 
+  auth:
+    build:
+      context: ./services/auth
+      dockerfile: Dockerfile
+    container_name: auth
+    restart: unless-stopped
+    ports:
+      - "${AUTH_PORT}:8081"
+    depends_on:
+      - consul
+      - postgres
+      - prometheus
+
+  file:
+    build:
+      context: ./services/file
+      dockerfile: Dockerfile
+    container_name: file
+    restart: unless-stopped
+    ports:
+      - "${FILE_PORT}:8082"
+    depends_on:
+      - consul
+      - minio
+      - prometheus
+
+  post:
+    build:
+      context: ./services/post
+      dockerfile: Dockerfile
+    container_name: post
+    restart: unless-stopped
+    ports:
+      - "${POST_PORT}:8083"
+    depends_on:
+      - consul
+      - postgres
+      - prometheus
+
 volumes:
   consul-data:
   postgres_data:
